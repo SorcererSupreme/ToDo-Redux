@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ToDo from './ToDo.js'
+import AddToDo from './AddToDo.js'
 
 class ToDoList extends Component{
 
@@ -11,8 +12,22 @@ class ToDoList extends Component{
     createToDos(){
         
         var ToDos = this.state.fruits.map((fruit)=>
-                                    <ToDo key = {fruit.toString()} item = {fruit}>wefwe</ToDo>)
+                                    <ToDo key = {fruit.toString()} item = {fruit} onClick = {(toDo)=>this.deleteToDo(toDo)}></ToDo>)
         return ToDos;
+    }
+
+    addToDo(toDo){
+        var newfruits = this.state.fruits;
+        newfruits.push(toDo);
+        this.setState({fruits : newfruits});
+    }
+
+    deleteToDo(toDo){
+        var newfruits = this.state.fruits;
+        var index = newfruits.indexOf(toDo);
+        // console.log(index);
+        newfruits.splice(index,1);
+        this.setState({fruits: newfruits});
     }
 
 
@@ -20,6 +35,7 @@ class ToDoList extends Component{
         var ToDoListCompute = this.createToDos();
         return (
             <div>
+                <AddToDo onClick = {(value)=>{this.addToDo(value);console.log(this.state)}}></AddToDo>
                 {ToDoListCompute}
             </div>
         )
