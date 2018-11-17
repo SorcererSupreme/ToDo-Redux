@@ -6,39 +6,37 @@ class ToDoList extends Component{
 
     constructor(props){
         super(props);
-        this.state = {fruits : ['bananas','apples','oranges','sitaphal']}
+        console.log(props);
+        this.state = {fruits : props.allToDos}
     }
 
     createToDos(){
         
         var ToDos = this.state.fruits.map((fruit)=>
-                                    <ToDo key = {fruit.toString()} item = {fruit} onClick = {(toDo)=>this.deleteToDo(toDo)}></ToDo>)
+                                    <ToDo key = {fruit.toString()} item = {fruit} 
+                                                onClickDelete = {(toDo)=>this.props.onClickDelete(toDo)}
+                                                onClickComplete = {(toDo) => this.props.onClickComplete(toDo)}></ToDo>)
         return ToDos;
     }
 
-    addToDo(toDo){
-        var newfruits = this.state.fruits;
-        newfruits.push(toDo);
-        this.setState({fruits : newfruits});
-    }
-
-    deleteToDo(toDo){
-        var newfruits = this.state.fruits;
-        var index = newfruits.indexOf(toDo);
-        // console.log(index);
-        newfruits.splice(index,1);
-        this.setState({fruits: newfruits});
-    }
+    // deleteToDo(toDo){
+    //     var newfruits = this.state.fruits;
+    //     var index = newfruits.indexOf(toDo);
+    //     // console.log(index); 
+    //     newfruits.splice(index,1);
+    //     this.setState({fruits: newfruits});
+    // }
 
 
     render(){
         var ToDoListCompute = this.createToDos();
         return (
             <div>
-                <AddToDo onClick = {(value)=>{this.addToDo(value);console.log(this.state)}}></AddToDo>
+                <AddToDo onClick = {(value)=>{this.props.onClickAdd(value)}}></AddToDo>
                 {ToDoListCompute}
             </div>
         )
     }
 }
+{/* <AddToDo onClick = {(value)=>{this.addToDo(value)}}></AddToDo> */}
 export default ToDoList;
