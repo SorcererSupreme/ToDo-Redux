@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import ToDo from './ToDo.js'
 import AddToDo from './AddToDo.js'
 
@@ -12,31 +13,30 @@ class ToDoList extends Component{
 
     createToDos(){
         
-        var ToDos = this.state.fruits.map((fruit)=>
-                                    <ToDo key = {fruit.toString()} item = {fruit} 
-                                                onClickDelete = {(toDo)=>this.props.onClickDelete(toDo)}
-                                                onClickComplete = {(toDo) => this.props.onClickComplete(toDo)}></ToDo>)
+        var ToDos = this.props.allToDos.map((toDo)=>
+                                    <ToDo key = {toDo.toString()} item = {toDo}></ToDo>)
         return ToDos;
     }
-
-    // deleteToDo(toDo){
-    //     var newfruits = this.state.fruits;
-    //     var index = newfruits.indexOf(toDo);
-    //     // console.log(index); 
-    //     newfruits.splice(index,1);
-    //     this.setState({fruits: newfruits});
-    // }
 
 
     render(){
         var ToDoListCompute = this.createToDos();
         return (
             <div>
-                <AddToDo onClick = {(value)=>{this.props.onClickAdd(value)}}></AddToDo>
+                <AddToDo></AddToDo>
                 {ToDoListCompute}
             </div>
         )
     }
 }
-{/* <AddToDo onClick = {(value)=>{this.addToDo(value)}}></AddToDo> */}
-export default ToDoList;
+
+
+const mapStateToProps = (state)=>{
+    return{
+        allToDos: state.ToDoReducer.toDo
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(ToDoList)

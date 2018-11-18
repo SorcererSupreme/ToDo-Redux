@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 
 class DeletedToDo extends Component{
     constructor(props){
         super(props);
-        console.log("props of trash: ", props);
-        this.state = {deletedToDoList: props.deletedToDos}
     }
 
     deletedToDos(){
         
-        var ToDos = this.state.deletedToDoList.map((toDo)=>
+        var ToDos = this.props.deletedToDoList.map((toDo)=>
                                     <li key = {toDo.toString()} >{toDo}</li>)
         return ToDos;
     }
@@ -24,4 +23,13 @@ class DeletedToDo extends Component{
         )
     }
 }
-export default DeletedToDo;
+
+const mapStateToProps = (state) => {
+    return {
+        deletedToDoList: state.ToDoReducer.deleted
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(DeletedToDo);

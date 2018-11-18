@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 class CompletedToDo extends Component {
     constructor(props){
         super(props);
-        this.state = {
-            completedToDos: props.completedToDos
-        }
+        console.log(props)
+        // this.state = {
+        //     completedToDos: props.completedToDos
+        // }
     }
 
     completedToDos(){
         
-        var ToDos = this.state.completedToDos.map((toDo)=>
+        var ToDos = this.props.completedToDos.map((toDo)=>
                                     <li key = {toDo.toString()} >{toDo}</li>)
         return ToDos;
     }
@@ -26,4 +28,13 @@ class CompletedToDo extends Component {
     }
 }
 
-export default CompletedToDo;
+const mapStateToProps = (state) => {
+    return {
+        completedToDos: state.ToDoReducer.completed
+    }
+}
+
+
+export default connect(
+    mapStateToProps
+)(CompletedToDo);
